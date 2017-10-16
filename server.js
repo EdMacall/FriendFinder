@@ -13,18 +13,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: "application/vnd.api+json" }));
-app.use(express.static(path.join(__dirname)));
+
 
 // Routes
-app.get("/icecream/:name", function(req, res) {
-
-
-});
-
-app.get("/icecreams", function(req, res) {
-
-
-});
+require("./app/routing/apiRoutes")(app);
+require("./app/routing/htmlRoutes")(app);
 
 // Initiate the listener.
 app.listen(port, function() 
