@@ -9,38 +9,45 @@ module.exports = function(app)
 
   app.post("/api/friends", function(req, res)
   {
-    var bestMatch = 100;
-    var bestMatchScore = 0;
+    var bestMatchIndex = 0;
+    var bestMatchScore = 100;
     var friendsDifference = [];
     var friendDifference = 0;
 
-    var newFriend = req.body;
+    var userData = req.body;
 
     for(var i = 0; i < friendsData.length; i++)
     {
       friendDifference = 0;
       for(var j = 0; j < 10; j++)
       {
-        friendDifference += getDifference(friendsData[i].scores[j], newFriend.scores[j]);
+        friendDifference += getDifference(friendsData[i].scores[j], userData.scores[j]);
       }
       friendsDifference.push(friendDifference);
       if(i == 0)
       {
-        bestMatch = 0;
+        bestMatchIndex = 0;
         bestMatchScore = friendDifference;
       }
       else
       {
         if(friendDifference < bestMatchScore)
         {
-          bestMatch = i;
+          bestMatchIndex = i;
           bestMatchScore = friendDifference;
         }
       }
     }
 
-    friendsData.push(req.body);
-    res.json(friendsData[bestMatch]);
+    var bestMatch = 
+    {
+      name: friendsData[bestMatchIndex].name,
+      photo: friendsData[bestMatchIndex].photo,
+      friendDifference: ((40.0 - bestMatchScore) * 2.5)
+    };
+
+    friendsData.push(userData);
+    res.json(bestMatch);
   });
 
   function getDifference(val1, val2)
