@@ -234,7 +234,7 @@
           // Grab the result from the AJAX post so that the best match's name and photo are displayed.
           $("#matchName").text(data.name);
           $('#matchImg').attr("src", data.photo);
-          $("#matchValue").text("The dude is a " + data.friendDifference + "% match.");
+          $("#matchValue").text("This dude is a " + data.friendDifference + "% match to you.");
 
           // Show the modal with the best match 
           $("#resultsModal").modal('toggle');
